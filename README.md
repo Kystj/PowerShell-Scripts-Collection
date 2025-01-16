@@ -14,8 +14,8 @@ This collection includes a variety of PowerShell scripts for different use cases
 Each script is independent and intended to perform specific tasks. You can choose and run only the scripts that meet your needs.
 
 ## Table of Contents
-- [CPU Performance Monitoring Script](#cpuperformancemonitoringscript)
-- [System Health Check and Report Generator](#systemhealthcheckandreportgenerator)
+- [CPU Performance Monitoring Script](#cpu-performance-monitoring-script)
+- [System Health Check and Report Generator](#system-health-check-and-report-generator)
 
 
 
