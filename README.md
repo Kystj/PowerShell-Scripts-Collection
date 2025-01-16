@@ -17,7 +17,7 @@ Each script is independent and intended to perform specific tasks. You can choos
 - [CPU Performance Monitoring Script](#cpu-performance-monitoring-script)
 - [System Health Check and Report Generator](#system-health-check-and-report-generator)
 
-
+---
 
 ## CPU Performance Monitoring Script
 
@@ -66,20 +66,16 @@ This PowerShell script automates the monitoring of CPU usage on your Windows sys
 2025-01-13 09:30:15: ALERT! CPU usage is at 40%, which is above the threshold.
 2025-01-13 09:30:15: Process with the highest CPU usage: chrome
 ```
-
+---
 
 # System Health Check and Report Generator
 
 This PowerShell script gathers basic system health metrics, logs them, and generates a simple HTML report. It’s useful for checking the status of your system in terms of CPU usage, memory, disk space, and uptime.
 
----
-
 ## Features
 - **Logging**: Logs each step of the script execution and any errors to a specified log file.
 - **HTML Report**: Generates an HTML report showing system health metrics like CPU usage, memory usage, disk space, and uptime.
 - **Directory Creation**: Automatically creates necessary directories for logs and reports if they don’t already exist.
-
----
 
 ## Configuration
 
