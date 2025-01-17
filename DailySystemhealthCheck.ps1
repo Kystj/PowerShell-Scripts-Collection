@@ -1,8 +1,8 @@
 # Production-Ready System Health Check and Report Generator
 
 # Configuration
-$reportPath = "C:\Logs\Reports\SystemHealthReport.html"
-$logFile = "C:\Logs\SystemHealthCheck.log"
+$reportPath = "<Enter_Your_Report_File_Path>"
+$logFile = "<Enter_Your_Log_File_Path>"
 
 # Logging helper function
 function Log {
