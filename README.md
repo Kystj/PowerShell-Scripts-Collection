@@ -86,6 +86,7 @@ Before running the script, customize the following variables to specify your pre
 $reportPath = "<Enter_Your_Report_File_Path>"
 $logFile = "<Enter_Your_Log_File_Path>"
 ```
+---
 
 # Integrity Watcher
 
