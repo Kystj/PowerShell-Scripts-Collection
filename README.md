@@ -16,6 +16,7 @@ Each script is independent and intended to perform specific tasks. You can choos
 ## Table of Contents
 - [CPU Performance Monitoring Script](#cpu-performance-monitoring-script)
 - [System Health Check and Report Generator](#system-health-check-and-report-generator)
+- [Integrity Watcher](#integrity-watcher)
 
 ---
 
@@ -84,3 +85,5 @@ Before running the script, customize the following variables to specify your pre
 ```powershell
 $reportPath = "<Enter_Your_Report_File_Path>"
 $logFile = "<Enter_Your_Log_File_Path>"
+
+## Integrity Watcher
