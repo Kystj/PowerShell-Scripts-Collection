@@ -1,54 +1,73 @@
 param (
     [string]$ConfigPath = "F:\PowerShell\config.json",
-    [switch]$GenerateBaseline
+    [switch]$GenerateBaseline,
+    [string]$LogFile = "F:\PowerShell\drift.log"
 )
 
-# If GenerateBaseline then generate the baseline file
+function Write-LogMessage {
+    param ([string]$Message)
+    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    "$timestamp - $Message" | Out-File -Append -FilePath $LogFile
+    Write-Host $Message
+}
+
 if ($GenerateBaseline) {
     $baseline = @{
-        Timestamp = Get-Date
-        Files = Get-ChildItem -Path "F:\PowerShell" -File -Recurse | ForEach-Object {
-            @{
-                Path = $_.FullName
-                Hash = (Get-FileHash $_.FullName).Hash
+        Files = Get-ChildItem -Path "F:\PowerShell" -File -Recurse | Where-Object { $_.FullName -ne $LogFile } | ForEach-Object {
+            try {
+                [PSCustomObject]@{
+                    Timestamp = Get-Date
+                    Path = $_.FullName
+                    Hash = (Get-FileHash $_.FullName -ErrorAction Stop).Hash
+                }
+            } catch {
+                Write-LogMessage "Warning: Unable to hash file $($_.FullName) - $_"
             }
         }
     }
 
     $baseline | ConvertTo-Json -Depth 3 | Set-Content -Path $ConfigPath
-    Write-Host "Baseline saved to $ConfigPath"
+    Write-LogMessage "Baseline saved to $ConfigPath"
     exit
 }
 
-# Read the configuration file
 if (-Not (Test-Path $ConfigPath)) {
-    Write-Host "No config file found. Run with -GenerateBaseline to create one."
+    Write-LogMessage "No config file found. Run with -GenerateBaseline to create one."
     exit 1
 }
+
 $baseline = Get-Content -Raw -Path $ConfigPath | ConvertFrom-Json
-
-# Detect drift
+$currentFiles = Get-ChildItem -Path "F:\PowerShell" -File -Recurse | Where-Object 
+    { $PSItem.FullName -ne $LogFile } | Select-Object -ExpandProperty FullName
+    
+$baselinePaths = $baseline.Files.Path
 $IsDrift = $false
-foreach ($entry in $baseline.Files) {
-    # Skip the config file itself from drift detection
-    if ($entry.Path -eq $ConfigPath) {
-        continue
-    }
 
+foreach ($entry in $baseline.Files) {
+    if ($entry.Path -eq $ConfigPath -or $entry.Path -eq $LogFile) { continue }
     if (Test-Path $entry.Path) {
-        # File exists, check hash
-        $currentHash = (Get-FileHash $entry.Path).Hash
-        if ($currentHash -ne $entry.Hash) {
-            Write-Host "Drift detected: $($entry.Path) has changed!"
-            $IsDrift = $true
+        try {
+            $currentHash = (Get-FileHash $entry.Path -ErrorAction Stop).Hash
+            if ($currentHash -ne $entry.Hash) {
+                Write-LogMessage "Drift detected: $($entry.Path) has changed!"
+                $IsDrift = $true
+            }
+        } catch {
+            Write-LogMessage "Warning: Unable to hash file $($entry.Path) - $_"
         }
     } else {
-        # File is missing
-        Write-Host "Drift detected: $($entry.Path) is missing!"
+        Write-LogMessage "Drift detected: $($entry.Path) is missing!"
+        $IsDrift = $true
+    }
+}
+
+foreach ($file in $currentFiles) {
+    if ($file -notin $baselinePaths -and $file -ne $LogFile) {
+        Write-LogMessage "Drift detected: New file added - $file"
         $IsDrift = $true
     }
 }
 
 if (-Not $IsDrift) {
-    Write-Host "No drift detected."
+    Write-LogMessage "No drift detected."
 }
