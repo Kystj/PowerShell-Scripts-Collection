@@ -20,7 +20,7 @@ Each script is independent and intended to perform specific tasks. You can choos
 
 ---
 
-## CPU Performance Monitoring Script
+# CPU Performance Monitoring Script
 
 ### Overview
 
@@ -85,5 +85,7 @@ Before running the script, customize the following variables to specify your pre
 ```powershell
 $reportPath = "<Enter_Your_Report_File_Path>"
 $logFile = "<Enter_Your_Log_File_Path>"
+```
 
-## Integrity Watcher
+# Integrity Watcher
+
