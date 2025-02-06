@@ -1,7 +1,7 @@
 param (
-    [string]$ConfigPath = "F:\PowerShell\config.json",
+    [string]$ConfigPath = "Desired Config File Path",
     [switch]$GenerateBaseline,
-    [string]$LogFile = "F:\PowerShell\drift.log"
+    [string]$LogFile = "Desired Log File Path"
 )
 
 function Write-LogMessage {
@@ -13,7 +13,7 @@ function Write-LogMessage {
 
 if ($GenerateBaseline) {
     $baseline = @{
-        Files = Get-ChildItem -Path "F:\PowerShell" -File -Recurse | Where-Object { $_.FullName -ne $LogFile } | ForEach-Object {
+        Files = Get-ChildItem -Path "Directory to Watch" -File -Recurse | Where-Object { $_.FullName -ne $LogFile } | ForEach-Object {
             try {
                 [PSCustomObject]@{
                     Timestamp = Get-Date
@@ -37,7 +37,7 @@ if (-Not (Test-Path $ConfigPath)) {
 }
 
 $baseline = Get-Content -Raw -Path $ConfigPath | ConvertFrom-Json
-$currentFiles = Get-ChildItem -Path "F:\PowerShell" -File -Recurse | Where-Object 
+$currentFiles = Get-ChildItem -Path "Directory to Watch" -File -Recurse | Where-Object 
     { $PSItem.FullName -ne $LogFile } | Select-Object -ExpandProperty FullName
     
 $baselinePaths = $baseline.Files.Path
