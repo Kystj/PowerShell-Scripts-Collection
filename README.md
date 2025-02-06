@@ -17,6 +17,7 @@ Each script is independent and intended to perform specific tasks. You can choos
 - [CPU Performance Monitoring Script](#cpu-performance-monitoring-script)
 - [System Health Check and Report Generator](#system-health-check-and-report-generator)
 - [Integrity Watcher](#integrity-watcher)
+- [System Alert Bot](#system-alert-bot)
 
 ---
 
@@ -89,4 +90,8 @@ $logFile = "<Enter_Your_Log_File_Path>"
 ---
 
 # Integrity Watcher
+
+---
+
+# System Alert Bot
 
