@@ -18,6 +18,7 @@ Each script is independent and intended to perform specific tasks. You can choos
 - [System Health Check and Report Generator](#system-health-check-and-report-generator)
 - [Integrity Watcher](#integrity-watcher)
 - [System Alert Bot](#system-alert-bot)
+- [Log File Analyzer](#log-file-analyzer)
 
 ---
 
@@ -94,4 +95,8 @@ $logFile = "<Enter_Your_Log_File_Path>"
 ---
 
 # System Alert Bot
+
+---
+
+# Log File Analyzer
 
